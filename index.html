@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/estilo.css"  media="screen,projection"/>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300i,900i" rel="stylesheet">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  </head>
+  <body>
+    <header class="row z-depth-2">
+      <nav class="col s12">
+          <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo"><h1>Gour-net</h1></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="#!">Informe de Ventas</a></li>
+        <li><a href="#">Ranking de productos</a></li>
+        <li><a href="#">Cierre de caja</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <ul id="slide-out" class="side-nav">
+    <li><div class="user-view">
+      <img src="images/logo_circulo.svg" width= "110px">
+      <h2>Gour-net</h2>
+      <h3>Informes Web</h3>
+       </div>
+  </li>
+    <li><div class="divider"></div></li>
+    <li><a href="#!"><i class="material-icons">restaurant</i>Ventas Diarias</a></li>
+    <li><a class="subheader">En construcción</a></li>
+    <li><a href="#!"><i class="material-icons">store_mall_directory</i>Cierre de caja</a></li>
+    <li><a href="#!"><i class="material-icons">star</i>Ranking de Productos</a></li>
+  </ul>
+
+</header>
+
+<section class="encabezado row">
+  <div class="col s12">
+    <h1>Informe de Ventas</h1>
+
+
+    <div class="row">
+  <form class="col s12 m6 l4">
+    <div class="row">
+
+      <div class="input-field col s12">
+          <input type="text" class="datepicker">
+      <label for="first_name">Fecha</label>
+      </div>
+
+      <div class="input-field col s12">
+    <select>
+      <option value="" disabled selected>Cual Local</option>
+      <option value="1">Vitacura</option>
+      <option value="2">Maipú</option>
+      <option value="3">Lo Barnechea</option>
+    </select>
+    <label>Selecciona un local</label>
+  </div>
+
+
+  </form>
+
+  <div class="col s12">
+  <a style="width: 100%" class="waves-effect waves-light btn  blue-grey darken-4">Buscar</a>
+  </div>
+
+</div>
+
+
+</div>
+</section>
+
+<section class="row tiemporeal">
+  <div class="col s12 m8 offset-m2">
+    <h3>Ventas en tiempo real</h3>
+    <h1>$523.710</h1>
+  </div>
+</section>
+
+<section class="row ventasdiarias">
+  <div class="col s12 m8 offset-m2">
+    <h3>Ventas Diarias</h3>
+    <p>Ventas actuales vs promedio de ventas del dia durante el año</p>
+    <canvas id="bar-chart" width="800" height="450"></canvas>
+
+  </div>
+</section>
+
+<section class="row ventasxhora">
+  <div class="col s12 m8 offset-m2">
+    <h3>Ventas por hora</h3>
+    <canvas id="line-chart" width="800" height="450"></canvas>
+
+
+  </div>
+</section>
+
+<section class="row acumulado">
+  <div class="col s12">
+    <h3>Ventas acumulado Semana</h3>
+    <h1>$1.680.710</h1>
+  </div>
+</section>
+
+
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+
+      <script>
+      $('.button-collapse').sideNav({
+      menuWidth: 300, // Default is 300
+      edge: 'left', // Choose the horizontal origin
+      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+      draggable: true, // Choose whether you can drag to open on touch screens,
+    }
+  );
+    </script>
+<!--MATERIALIZE ESCOGER FECHA-->
+    <script>
+    $('.datepicker').pickadate({
+   selectMonths: true, // Creates a dropdown to control month
+   selectYears: 5, // Creates a dropdown of 15 years to control year,
+   today: 'Today',
+   clear: 'Clear',
+   close: 'Ok',
+   closeOnSelect: true, // Close upon selecting a date,
+   container: undefined, // ex. 'body' will append picker to body
+  });
+
+    </script>
+<!--MATERIALIZE INPUT SELECT-->
+    <script>
+    $(document).ready(function() {
+  $('select').material_select();
+});
+
+    </script>
+
+<!--Gráfico de BARRAS-->
+    <script>
+    // Bar chart
+new Chart(document.getElementById("bar-chart"), {
+    type: 'bar',
+    data: {
+      labels: ["Promedio", "Hoy","."],
+      datasets: [
+        {
+          label: "Ventas Pesos",
+          backgroundColor: ["#3e95cd","#8e5ea2", "#8e5ea2"],
+          data: [747800,657700,0]
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: false,
+        text: 'Predicted world population (millions) in 2050'
+      }
+    }
+});
+    </script>
+    <!--FIN Gráfico de BARRAS-->
+
+    <!---Gráfico por horas-->
+    <script>
+    new Chart(document.getElementById("line-chart"), {
+    type: 'line',
+    data: {
+    labels: ["09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00","24:00"],
+    datasets: [{
+        data: [30000,20000,10000,60000,65320,70000,80000,110000,110000,120000,140000,120000,70000,60000,50000,40000],
+        label: "Ventas x Hora",
+        borderColor: "#3e95cd",
+        fill: true
+      },
+    ]
+    },
+    options: {
+    title: {
+      display: false,
+      text: 'Ventas por hora'
+    }
+    }
+    });
+
+    </script>
+    <!---Gráfico por horas-->
+
+    </body>
+  </html>
