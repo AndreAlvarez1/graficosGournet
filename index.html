@@ -134,38 +134,38 @@
       <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
       <script type="text/javascript" src="js/visual.js"></script>
-      <!--<script type="text/javascript" src="js/traedor.js"></script>-->
 
+      <!--<script type="text/javascript" src="js/traedor.js"></script>-->
 
 
 
     <script>
 
-    //traedor
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-           respuesta = JSON.parse(xhttp.responseText);
-           ventas = respuesta.ventas;
+        if (this.readyState == 4 && this.status == 200)
+          {
+               respuesta = JSON.parse(xhttp.responseText);
+               ventas = respuesta.ventas;
+               actual = ventas[0].actual;
+               promedio = ventas[1].promedio;
+               horas = ventas[3].ventahoras;
 
-           actual = ventas[0].actual;
-           promedio = ventas[1].promedio;
+               //INSERTAMOS LAS VENTAS EN TIEMPO REAL EN EL HTML
+               document.getElementById("ventasreal").innerHTML = "$" + actual;
 
-           //INSERTAMOS LAS VENTAS EN TIEMPO REAL EN EL HTML
-           document.getElementById("ventasreal").innerHTML = "$" + actual;
+               //INSERTAMOS LAS VENTAS ACUMULADAS DE LA SEMANA EN EL HTML
+               document.getElementById("acumulado").innerHTML = "$" + ventas[2].acumulado;
 
-           //INSERTAMOS LAS VENTAS ACUMULADAS DE LA SEMANA EN EL HTML
-           document.getElementById("acumulado").innerHTML = "$" + ventas[2].acumulado;
+               //LLAMAMOS FUNCION QUE DIBUJO LAS BARRAS-->
+               crearBarra(promedio,actual);
 
-           //LLAMAMOS FUNCION QUE DIBUJO LAS BARRAS-->
-           crearBarra(promedio,actual);
-        }
+               crearHoras(horas);
 
-    };
+           }
+      };
     xhttp.open("GET", "ventas.json", true);
     xhttp.send();
-
-    console.log(actual);
 
 
 //FUNCIONA QUE DIBUJA EL GRÁFICA DE BARRAS
@@ -194,35 +194,37 @@ new Chart(document.getElementById("bar-chart"), {
 
 }
 
-    </script>
-
-
-
-
-    <!---Gráfico por horas-->
-    <script>
-    new Chart(document.getElementById("line-chart"), {
-    type: 'line',
-    data: {
-    labels: ["09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00","24:00"],
-    datasets: [{
-        data: [30000,20000,10000,60000,65320,70000,80000,110000,110000,120000,140000,120000,70000,60000,50000,40000],
-        label: "Ventas x Hora",
-        borderColor: "#3e95cd",
-        fill: true
-      },
-    ]
+  //FUNCION Gráfico por horas-->
+function crearHoras(horas){
+  new Chart(document.getElementById("line-chart"), {
+  type: 'line',
+  data: {
+  labels: ["00:00", "01:00","02:00","03:00","04:00","05:00","06:00","07:00","08:00", "09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00","20:00","21:00","22:00","23:00"],
+  datasets: [{
+      data: horas,
+      label: "Ventas x Hora",
+      borderColor: "#3e95cd",
+      fill: true
     },
-    options: {
-    title: {
-      display: false,
-      text: 'Ventas por hora'
-    }
-    }
-    });
+  ]
+  },
+  options: {
+  title: {
+    display: false,
+    text: 'Ventas por hora'
+  }
+  }
+  });
+}
+
+
 
     </script>
-    <!---Gráfico por horas-->
+
+
+
+
+
 
     </body>
   </html>
